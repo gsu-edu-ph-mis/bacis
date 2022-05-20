@@ -1,0 +1,15 @@
+<div class="form-group">
+    <label v-bind:for="{{name}}">
+        {% if label %}
+            {{label}}
+        {% endif %}
+    </label>
+    <div>
+        <select v-bind:name="{{name}}" v-bind:id="{{name}}" v-model="{% if vModel %}{{vModel}}{% else %}{{name}}{% endif %}" class="form-control">
+            {% for option in options %}
+                <option value="{{option.value}}">{{option.text}}</option>
+            {% endfor %}
+        </select>
+        <small class="invalid-feedback">${getError({{name}})}</small>
+    </div>
+</div>

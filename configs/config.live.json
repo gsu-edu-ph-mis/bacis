@@ -1,0 +1,12 @@
+{
+  "app": {
+    "url": "https://bacis.gsc.edu.ph"
+  },
+  "nunjucks": {
+    "loader": {
+      "watch": false,
+      "noCache": false
+    }
+  },
+  "loginDelay": 5
+}

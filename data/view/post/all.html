@@ -1,0 +1,61 @@
+{% extends "document.html" %}
+
+{% block body %}
+<div class="col-md-12">
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div class="d-flex align-items-start">
+          
+            <h1 class="h2 ml-2">Posts</h1>
+        </div>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <a href="/post/create" class="btn btn-sm btn-outline-primary">Add Post</a>
+            </div>
+        </div>
+    </div>
+    {% include 'parts/flash.html' %}
+    {% if posts.length <= 0 %}
+        <p>None found.</p>
+    {% else %}
+
+        
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="15%"></th>
+                        <th width="70%">
+                            Title
+                        </th>
+                        <th width="15%">
+                            Categories
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td>
+                            {{post.date|format_date('MMM DD, YYYY')}}
+                        </td>
+                        <td><a href="{{post.link}}" target="_blank">{{post.title.rendered}}</a></td>
+                        <td>{{post.categories2|join(',')}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+
+            <div class="col-md-6 text-center text-md-left">
+
+            </div>
+            <div class="col-md-6 text-center text-md-right">
+                {% include "parts/pagination.html" %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

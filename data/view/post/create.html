@@ -1,0 +1,108 @@
+{% extends "document.html" %}
+
+{% block body %}
+<div class="col-md-12">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div class="d-flex align-items-start">
+            <h1 class="h3">Create Posting</h1>
+        </div>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <a href="/post/all" class="btn btn-sm btn-outline-primary">Back</a>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content pt-3 pb-2 pl-3 pr-2">
+        <form ref="form" id="vApp" v-cloak v-on:submit.prevent="onSubmit" action="/post/create" method="POST" class="form-default">
+            
+            <div class="form-group">
+                <label for="title">Title</label>
+                <div>
+                    <input name="title" id="title" v-model="title" type="text" class="form-control">
+                    <small class="invalid-feedback">${getError('title')}</small>
+                </div>
+            </div>
+			<div class="form-group">
+                <label for="link">Google Drive Link</label>
+                <div>
+                    <input name="link" id="link" v-model="link" type="text" class="form-control">
+                    <small class="invalid-feedback">${getError('link')}</small>
+                </div>
+            </div>
+			<div class="form-group">
+                <label for="category">Category</label>
+                <div>
+                    <select name="category" id="category" v-model="category" class="form-control">
+						{% for cat in categories %}
+						<option value="{{cat.id}}">{{cat.name}}</option>
+						{% endfor %}
+					</select>
+                    <small class="invalid-feedback">${getError('category')}</small>
+                </div>
+            </div>
+			<div class="form-group">
+                <label for="link">Date</label>
+                <div>
+                    <input name="date" id="date" v-model="date" type="date" class="form-control">
+                    <small class="invalid-feedback">${getError('date')}</small>
+                </div>
+            </div>
+
+            <div class="form-row pt-3 pb-3">
+                <div class="col-md-12">
+                    <button class="btn btn-primary">Publish</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+    var vApp = new Vue({
+        el: '#vApp',
+        delimiters: ["${", "}"],
+        mixins: [
+            window.vuelidate.validationMixin,
+            window.vuelidateExtendMixin,
+        ],
+       
+        data: {
+            title: '',
+            link: '',
+            category: '',
+            date: '{{now|format_date("YYYY-MM-DD")}}',
+        },
+        validations: {
+            title: {
+                required: window.validators.required
+            },
+			link: {
+                required: window.validators.required
+            },
+            category: {
+                required: window.validators.required
+            },
+			date: {
+                required: window.validators.required
+            },
+        },
+        methods: {
+            
+            onSubmit: function(){
+                var me = this;
+                me.$v.$touch()
+                if (me.$v.$error) {
+                    alert('Please correct the errors to continue.')
+                } else {
+                    me.$nextTick(function() {
+                        me.$refs.form.submit();
+                    });
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
+

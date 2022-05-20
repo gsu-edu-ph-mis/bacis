@@ -1,0 +1,54 @@
+<div id="sidebar" class="sidebar">
+    <div class="d-flex p-3 align-items-center brand">
+        <div class="mr-2">
+            <a href="/">
+                <img height="28" width="28" src="/images/logo-sm.png" alt="logo">
+            </a>
+        </div>
+        <h1>{{CONFIG.app.title}}</h1>
+        <div class="text-right col pr-0">
+            {% include 'parts/btn-toggle.html' %}
+        </div>
+    </div>
+    
+    <ul class="nav flex-column mb-2">
+        <li class="nav-item {{urlPath|active_class([r/^\/post\/(.)+/, r/^\/post\/(.)+/], 'expanded')}}" id="nav-item-employees">
+            <a class="nav-link {{urlPath|active_class([r/^\/post\/(.)+/])}}" href="/post/all">
+				<svg style="width:16px;height:16px" viewBox="0 0 24 24">    <path fill="currentColor" d="M15 3H5A2 2 0 0 0 3 5V19A2 2 0 0 0 5 21H19A2 2 0 0 0 21 19V9L15 3M19 19H5V5H14V10H19M17 14H7V12H17M14 17H7V15H14" /></svg>
+                <span>Posts</span>
+                <button class="nav-expander" type="button">
+                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                    </svg>
+                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+                    </svg>
+                </button>
+            </a>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link {{urlPath|active_class([r/^\/post\/all/])}}" href="/post/all">
+                        All Posts
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{urlPath|active_class([r/^\/post\/create/])}}" href="/post/create">
+                        Add Post
+                    </a>
+                </li>
+                
+            </ul>
+			
+        </li>
+		<li class="nav-item expanded" id="nav-item-bac">
+            <a class="nav-link" href="{{CONFIG.app.bacPage}}" target="_blank">
+                <svg style="width:16px;height:16px" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M6,2A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6M6,4H13V9H18V20H6V4M8,12V14H16V12H8M8,16V18H13V16H8Z" />
+                </svg>
+                <span>View BAC Postings</span>
+            </a>
+        </li>
+    </ul>
+    
+   
+</div>
