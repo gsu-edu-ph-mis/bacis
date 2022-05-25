@@ -100,7 +100,6 @@ router.post('/post/create', async (req, res, next) => {
 				password: password
 			}
 		})
-		// console.log(post)
         flash.ok(req, 'post', `Published ${post.title.raw}.`)
         res.redirect(`/post/all`)
     } catch (err) {
@@ -123,7 +122,6 @@ router.get('/post/delete/:postId', async (req, res, next) => {
 				password: password
 			}
 		})
-		console.log(post)
         flash.ok(req, 'post', `Deleted post #${postId}.`)
         res.redirect(`/post/all`)
     } catch (err) {
