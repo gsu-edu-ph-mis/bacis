@@ -44,7 +44,7 @@
                         <td>{{post.categories2|join(',')}}</td>
                         <td>
                             {% if post.isDeletable %}
-                            <a onclick="return confirm('Are you sure?');" class="text-danger" href="/post/delete/{{post.id}}">X</a>
+                            <a onclick="return confirm('Delete this post permanently?');" class="text-danger" href="/post/delete/{{post.id}}">X</a>
                             {% else %}
                             <span onclick="alert('Cannot delete posts older than {{CONFIG.deleteWindow.value}} {{CONFIG.deleteWindow.unit}}.')">X</span>
                             {% endif %}
