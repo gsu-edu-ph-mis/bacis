@@ -31,12 +31,12 @@ router.get('/post/all', async (req, res, next) => {
 		})
 		let results = await Promise.all(promises)
 		posts = posts.map((post, i)=>{
-			post.categories = results[i]
+			post.categories = results[i] // Array of cat (all props)
 			results[i] = results[i].map((r)=>{
 				return r.name
 			})
-			post.categories2 = results[i]
-			
+			post.categories2 = results[i] // Array of cat names
+			post.isDeletable = moment.utc().diff(moment.utc(post.date), CONFIG.deleteWindow.unit) <= CONFIG.deleteWindow.value
 			return post
 		})
         
@@ -44,6 +44,7 @@ router.get('/post/all', async (req, res, next) => {
 			flash: flash.get(req, 'post'),
 			posts: posts
 		}
+		// return res.send(data)
         res.render('post/all.html', data)
     } catch (err) {
         next(err);
@@ -101,6 +102,29 @@ router.post('/post/create', async (req, res, next) => {
 		})
 		// console.log(post)
         flash.ok(req, 'post', `Published ${post.title.raw}.`)
+        res.redirect(`/post/all`)
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/post/delete/:postId', async (req, res, next) => {
+    try {
+		let {username, password} = res.user
+		
+		let postId = lodash.get(req, 'params.postId')
+		if(!postId){
+			throw new Error('Missing post id.')
+		}
+		
+        let post = await api.delete(`${CONFIG.app.api}/posts/${postId}`, {
+			auth: {
+				username: username,
+				password: password
+			}
+		})
+		console.log(post)
+        flash.ok(req, 'post', `Deleted post #${postId}.`)
         res.redirect(`/post/all`)
     } catch (err) {
         next(err);

@@ -49,5 +49,9 @@
   "loginDelay": 0,
   "bac": {
     "catId": 2
+  },
+  "deleteWindow": {
+    "unit": "hours",
+    "value": 24
   }
 }

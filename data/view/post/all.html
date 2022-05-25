@@ -24,13 +24,14 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="text-center" width="15%"></th>
+                        <th class="text-center" width="10%"></th>
                         <th width="70%">
                             Title
                         </th>
                         <th width="15%">
                             Categories
                         </th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +42,15 @@
                         </td>
                         <td><a href="{{post.link}}" target="_blank">{{post.title.rendered}}</a></td>
                         <td>{{post.categories2|join(',')}}</td>
+                        <td>
+                            {% if post.isDeletable %}
+                            <a onclick="return confirm('Are you sure?');" class="text-danger" href="/post/delete/{{post.id}}">X</a>
+                            {% else %}
+                            <span onclick="alert('Cannot delete posts older than {{CONFIG.deleteWindow.value}} {{CONFIG.deleteWindow.unit}}.')">X</span>
+                            {% endif %}
+                        </td>
                     </tr>
+                    
                 {% endfor %}
                 </tbody>
             </table>
