@@ -19,7 +19,7 @@ router.get('/post/all', async (req, res, next) => {
     try {
         let {username, password} = res.user
 
-        let posts = await api.get(`${CONFIG.app.api}/posts?categories=2`, {
+        let posts = await api.get(`${CONFIG.app.api}/posts?categories=${CONFIG.bac.catId}`, {
 			auth: {
 				username: username,
 				password: password
@@ -27,7 +27,7 @@ router.get('/post/all', async (req, res, next) => {
 		})
 		let promises = []
 		posts.forEach((post)=>{
-			promises.push(api.get(`${CONFIG.app.api}/categories?include=${post.categories.filter(c=>c!=2).join(',')}`))
+			promises.push(api.get(`${CONFIG.app.api}/categories?include=${post.categories.filter(c=> c != CONFIG.bac.catId).join(',')}`))
 		})
 		let results = await Promise.all(promises)
 		posts = posts.map((post, i)=>{
@@ -53,7 +53,7 @@ router.get('/post/all', async (req, res, next) => {
 router.get('/post/create', async (req, res, next) => {
     try {
 		let {username, password} = res.user
-		let categories = await api.get(`${CONFIG.app.api}/categories?parent=2`, {
+		let categories = await api.get(`${CONFIG.app.api}/categories?parent=${CONFIG.bac.catId}`, {
 			auth: {
 				username: username,
 				password: password
@@ -73,11 +73,23 @@ router.post('/post/create', async (req, res, next) => {
     try {
 		let {username, password} = res.user
 		
+		let categories = [CONFIG.bac.catId]
+		let category = lodash.get(req, 'body.category')
+		if(category){
+			if(!Array.isArray(category)){
+				category = [category]
+			}
+		} else {
+			category = []
+		}
+
+		categories = categories.concat(...category)
+
         let body = {
 			status: 'publish',
 			title: lodash.get(req, 'body.title'),
 			content: `<iframe src="${lodash.get(req, 'body.link')}" width="100%" height="480" allow="autoplay"></iframe>`,
-			categories: `2,${lodash.get(req, 'body.category')}`,
+			categories: `${CONFIG.bac.catId},${categories}`,
 			date: moment(lodash.get(req, 'body.date')).hour(moment().hours()).minutes(moment().minutes()).toDate(),
 		}
 		//return res.send(body)
@@ -87,7 +99,7 @@ router.post('/post/create', async (req, res, next) => {
 				password: password
 			}
 		})
-		console.log(post)
+		// console.log(post)
         flash.ok(req, 'post', `Published ${post.title.raw}.`)
         res.redirect(`/post/all`)
     } catch (err) {

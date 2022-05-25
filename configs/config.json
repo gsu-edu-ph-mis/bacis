@@ -46,5 +46,8 @@
   "recaptchav3": {
     "enable": true
   },
-  "loginDelay": 0
+  "loginDelay": 0,
+  "bac": {
+    "catId": 2
+  }
 }

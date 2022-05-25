@@ -16,23 +16,23 @@
         <form ref="form" id="vApp" v-cloak v-on:submit.prevent="onSubmit" action="/post/create" method="POST" class="form-default">
             
             <div class="form-group">
-                <label for="title">Title</label>
+                <label for="title"><strong>Title</strong> <span class="text-danger">*</span></label>
                 <div>
                     <input name="title" id="title" v-model="title" type="text" class="form-control">
                     <small class="invalid-feedback">${getError('title')}</small>
                 </div>
             </div>
 			<div class="form-group">
-                <label for="link">Google Drive Link</label>
+                <label for="link"><strong>Google Drive Link</strong> <span class="text-danger">*</span></label>
                 <div>
                     <input name="link" id="link" v-model="link" type="text" class="form-control">
                     <small class="invalid-feedback">${getError('link')}</small>
                 </div>
             </div>
 			<div class="form-group">
-                <label for="category">Category</label>
+                <label for="category"><strong>Category</strong> <span class="text-danger">*</span> <em>(Hold Ctrl + Click to select multiple)</em></label>
                 <div>
-                    <select name="category" id="category" v-model="category" class="form-control">
+                    <select name="category" multiple id="category" v-model="category" class="form-control">
 						{% for cat in categories %}
 						<option value="{{cat.id}}">{{cat.name}}</option>
 						{% endfor %}
@@ -41,7 +41,7 @@
                 </div>
             </div>
 			<div class="form-group">
-                <label for="link">Date</label>
+                <label for="link"><strong>Date</strong> <span class="text-danger">*</span></label>
                 <div>
                     <input name="date" id="date" v-model="date" type="date" class="form-control">
                     <small class="invalid-feedback">${getError('date')}</small>
