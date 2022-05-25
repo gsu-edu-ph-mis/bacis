@@ -116,13 +116,13 @@ router.get('/post/delete/:postId', async (req, res, next) => {
 			throw new Error('Missing post id.')
 		}
 		
-        let post = await api.delete(`${CONFIG.app.api}/posts/${postId}`, {
+        let post = await api.delete(`${CONFIG.app.api}/posts/${postId}?force=1`, {
 			auth: {
 				username: username,
 				password: password
 			}
 		})
-        flash.ok(req, 'post', `Deleted post #${postId}.`)
+        flash.ok(req, 'post', `Deleted post titled "${post.previous.title.raw}".`)
         res.redirect(`/post/all`)
     } catch (err) {
         next(err);
