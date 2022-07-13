@@ -4,8 +4,8 @@
     "description": "Bids and Awards Committee - Information System",
     "port": "9196",
     "url": "http://localhost:9196",
-    "api": "https://www.gsc.edu.ph/wp-json/wp/v2",
-    "bacPage": "https://www.gsc.edu.ph/bids-and-awards-committee",
+    "api": "https://www.gsu.edu.ph/wp-json/wp/v2",
+    "bacPage": "https://www.gsu.edu.ph/bids-and-awards-committee",
     "dir": "${APP_DIR}",
     "dirs": {
       "data": "${APP_DIR}/data",
