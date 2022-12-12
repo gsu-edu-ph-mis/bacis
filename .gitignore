@@ -122,3 +122,6 @@ scripts/install-data/import.txt
 scripts/scratch.js
 
 backlogs.*
+
+data/sessions.db
+data/app.db

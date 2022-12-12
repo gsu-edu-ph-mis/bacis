@@ -31,6 +31,10 @@
       "lstripBlocks": false
     }
   },
+  "sqlite": {
+    "username": "",
+    "db": "${APP_DIR}/data/app.db"
+  },
   "session": {
     "name": "bacis_app_sid",
     "store": {
