@@ -25,7 +25,7 @@
 			<div class="form-group">
                 <label for="link"><strong>Google Drive Link</strong> <span class="text-danger">*</span></label>
                 <div>
-                    <input name="link" id="link" v-model="link" type="text" class="form-control">
+                    <input v-on:blur="format($event)" name="link" id="link" v-model="link" type="text" class="form-control">
                     <small class="invalid-feedback">${getError('link')}</small>
                 </div>
             </div>
@@ -89,7 +89,19 @@
             },
         },
         methods: {
-            
+            format: function(e){
+                const link = this.link
+                if(/\/\/drive.google.com\/drive\/folders\//.test(link)){
+                    const { pathname } = new URL(link)
+                    if(pathname){
+                        let folderId = pathname.replace(/\/drive\/folders\//, '')
+                        if(folderId){
+                            let newUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}#grid`
+                            this.link = newUrl
+                        }
+                    }
+                }
+            },
             onSubmit: function(){
                 var me = this;
                 me.$v.$touch()
